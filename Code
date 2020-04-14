@@ -1,0 +1,16 @@
+const puppeteer = require('puppeteer');
+
+async function scrapeProduct(url) {
+    const browser = await puppeteer.launch();
+    const page = await browser.newPage();
+    await page.goto(url);
+
+    const [el] = await page.$x('//*[@id="ebooksImgBlkFront"]');
+    const src = await el.getProperty('src');
+    const srcTxt = await src.jsonValue();
+
+    console.log ({srcTxt});
+}
+
+
+scrapeProduct('https://www.amazon.com/Harry-Potter-Sorcerers-Stone-Rowling-ebook/dp/B0192CTMYG?pf_rd_r=91VZ9FD8SQ65RGKZ8MWX&pf_rd_p=5b6fbb21-908a-4250-b788-2d983e33f22d&pd_rd_r=2de93871-83cc-4fbc-8c6c-5c5476db04d6&pd_rd_w=P96qj&pd_rd_wg=MLC3g&ref_=pd_gw_zg_ebk')
